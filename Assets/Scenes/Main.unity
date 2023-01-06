@@ -351,3 +351,4 @@ MonoBehaviour:
   _capsule: 0
   _cylinder: 0
   _plane: 0
+  _maxNumberOfObject: 10

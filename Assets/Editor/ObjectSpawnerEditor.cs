@@ -35,6 +35,10 @@ public class ObjectSpawnerEditor : Editor
                 break;
         }
 
+
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_maxNumberOfObject"));
+
         // Save all changes made on the Inspector
         serializedObject.ApplyModifiedProperties();
     }

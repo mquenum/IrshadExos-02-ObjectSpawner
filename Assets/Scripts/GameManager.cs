@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _capsule;
     [SerializeField] private bool _cylinder;
     [SerializeField] private bool _plane;
+    [SerializeField] private int _maxNumberOfObject = 10;
+
+    private int _counter = 0;
 
     void Update()
     {
@@ -22,90 +25,95 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // get the mouse position
-            Vector3 mousePosition = Input.mousePosition;
-
-            // since mouse position z axis is always at 0 (because mouse position is in 2D: top & left)
-            // set the z axis to a distance from camera
-            mousePosition.z = 5.0f;
-
-            // create a variable where we transform screen coordinates in space coordinates (relative to game view)
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-            // obj creation
-            // TODO: LE CODE LE PLUS DEGUEULASSE DU MONDE, A REVOIR... MAIS COMMENT ?
-            GameObject obj;
-            if (_cube)
+            if (_counter < _maxNumberOfObject)
             {
-                _prefab = null;
-                _sphere = false;
-                _capsule = false;
-                _cylinder = false;
-                _plane = false;
+                // get the mouse position
+                Vector3 mousePosition = Input.mousePosition;
 
-                obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                // since mouse position z axis is always at 0 (because mouse position is in 2D: top & left)
+                // set the z axis to a distance from camera
+                mousePosition.z = 5.0f;
 
-                SetupObj(obj, worldPosition);
-            }
-            else if (_sphere)
-            {
-                _prefab = null;
-                _cube = false;
-                _capsule = false;
-                _cylinder = false;
-                _plane = false;
+                // create a variable where we transform screen coordinates in space coordinates (relative to game view)
+                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-                obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                // obj creation
+                // TODO: LE CODE LE PLUS DEGUEULASSE DU MONDE, A REVOIR... MAIS COMMENT ?
+                GameObject obj;
+                if (_cube)
+                {
+                    _prefab = null;
+                    _sphere = false;
+                    _capsule = false;
+                    _cylinder = false;
+                    _plane = false;
 
-                SetupObj(obj, worldPosition);
-            }
-            else if (_capsule)
-            {
-                _prefab = null;
-                _cube = false;
-                _sphere = false;
-                _cylinder = false;
-                _plane = false;
+                    obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-                obj = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                    SetupObj(obj, worldPosition);
+                }
+                else if (_sphere)
+                {
+                    _prefab = null;
+                    _cube = false;
+                    _capsule = false;
+                    _cylinder = false;
+                    _plane = false;
 
-                SetupObj(obj, worldPosition);
-            }
-            else if (_cylinder)
-            {
-                _prefab = null;
-                _cube = false;
-                _sphere = false;
-                _capsule = false;
-                _plane = false;
+                    obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
-                obj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                    SetupObj(obj, worldPosition);
+                }
+                else if (_capsule)
+                {
+                    _prefab = null;
+                    _cube = false;
+                    _sphere = false;
+                    _cylinder = false;
+                    _plane = false;
 
-                SetupObj(obj, worldPosition);
-            }
-            else if (_plane)
-            {
-                _prefab = null;
-                _cube = false;
-                _sphere = false;
-                _capsule = false;
-                _cylinder = false;
+                    obj = GameObject.CreatePrimitive(PrimitiveType.Capsule);
 
-                obj = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                    SetupObj(obj, worldPosition);
+                }
+                else if (_cylinder)
+                {
+                    _prefab = null;
+                    _cube = false;
+                    _sphere = false;
+                    _capsule = false;
+                    _plane = false;
 
-                SetupObj(obj, worldPosition);
-            }
-            else if (_prefab)
-            {
-                _cube = false;
-                _sphere = false;
-                _capsule = false;
-                _cylinder = false;
-                _plane = false;
+                    obj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 
-                obj = _prefab.gameObject;
+                    SetupObj(obj, worldPosition);
+                }
+                else if (_plane)
+                {
+                    _prefab = null;
+                    _cube = false;
+                    _sphere = false;
+                    _capsule = false;
+                    _cylinder = false;
 
-                SetupObj(obj, worldPosition);
+                    obj = GameObject.CreatePrimitive(PrimitiveType.Plane);
+
+                    SetupObj(obj, worldPosition);
+                }
+                else if (_prefab)
+                {
+                    _cube = false;
+                    _sphere = false;
+                    _capsule = false;
+                    _cylinder = false;
+                    _plane = false;
+
+                    obj = _prefab.gameObject;
+
+                    SetupObj(obj, worldPosition);
+                }
+                _counter++;
+                Debug.Log(_counter);
             }
         }
     }
