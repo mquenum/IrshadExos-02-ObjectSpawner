@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     {
         if (_counter < _maxNumberOfObject)
         {
-            GameObject instPrefab = GameObject.Instantiate(_obj, new Vector3(0, worldPosition.y, worldPosition.z), Quaternion.identity);
+            GameObject instPrefab = GameObject.Instantiate(obj, new Vector3(0, worldPosition.y, worldPosition.z), Quaternion.identity);
             instPrefab.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             _objects.Add(instPrefab);
             _counter++;
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // position the obj that was added last
-            _objects[_maxNumberOfObject - 1].transform.position = new Vector3(0, worldPosition.y, worldPosition.z);
+            _objects[0].transform.position = new Vector3(0, worldPosition.y, worldPosition.z);
         }
     }
 }
