@@ -6,15 +6,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _prefab;
-    [SerializeField] private bool _cube;
-    [SerializeField] private bool _sphere;
-    [SerializeField] private bool _capsule;
-    [SerializeField] private bool _cylinder;
-    [SerializeField] private bool _plane;
+    [SerializeField] private GameObject _obj;
     [SerializeField] private int _maxNumberOfObject = 10;
 
+    private List<GameObject> _objects;
     private int _counter = 0;
+
+    private void Start()
+    {
+        _objects = new List<GameObject>();
+    }
 
     void Update()
     {
@@ -23,119 +24,36 @@ public class GameManager : MonoBehaviour
 
     private void CubeOnClick()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (_obj && Input.GetMouseButtonDown(0))
         {
-            if (_counter < _maxNumberOfObject)
-            {
-                // get the mouse position
-                Vector3 mousePosition = Input.mousePosition;
+            // get the mouse position
+            Vector3 mousePosition = Input.mousePosition;
 
-                // since mouse position z axis is always at 0 (because mouse position is in 2D: top & left)
-                // set the z axis to a distance from camera
-                mousePosition.z = 5.0f;
+            // since mouse position z axis is always at 0 (because mouse position is in 2D: top & left)
+            // set the z axis to a distance from camera
+            mousePosition.z = 5.0f;
 
-                // create a variable where we transform screen coordinates in space coordinates (relative to game view)
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            // create a variable where we transform screen coordinates in space coordinates (relative to game view)
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-                // obj creation
-                // TODO: LE CODE LE PLUS DEGUEULASSE DU MONDE, A REVOIR... MAIS COMMENT ?
-                GameObject obj;
-                if (_cube)
-                {
-                    _prefab = null;
-                    _sphere = false;
-                    _capsule = false;
-                    _cylinder = false;
-                    _plane = false;
-
-                    obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
-                    SetupObj(obj, worldPosition);
-                }
-                else if (_sphere)
-                {
-                    _prefab = null;
-                    _cube = false;
-                    _capsule = false;
-                    _cylinder = false;
-                    _plane = false;
-
-                    obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
-                    SetupObj(obj, worldPosition);
-                }
-                else if (_capsule)
-                {
-                    _prefab = null;
-                    _cube = false;
-                    _sphere = false;
-                    _cylinder = false;
-                    _plane = false;
-
-                    obj = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-
-                    SetupObj(obj, worldPosition);
-                }
-                else if (_cylinder)
-                {
-                    _prefab = null;
-                    _cube = false;
-                    _sphere = false;
-                    _capsule = false;
-                    _plane = false;
-
-                    obj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-
-                    SetupObj(obj, worldPosition);
-                }
-                else if (_plane)
-                {
-                    _prefab = null;
-                    _cube = false;
-                    _sphere = false;
-                    _capsule = false;
-                    _cylinder = false;
-
-                    obj = GameObject.CreatePrimitive(PrimitiveType.Plane);
-
-                    SetupObj(obj, worldPosition);
-                }
-                else if (_prefab)
-                {
-                    _cube = false;
-                    _sphere = false;
-                    _capsule = false;
-                    _cylinder = false;
-                    _plane = false;
-
-                    obj = _prefab.gameObject;
-
-                    SetupObj(obj, worldPosition);
-                }
-                _counter++;
-                Debug.Log(_counter);
-            }
+            // obj creation
+            SetupObj(_obj, worldPosition);
         }
     }
 
     private void SetupObj(GameObject obj, Vector3 worldPosition)
     {
-        // change the obj scale
-        obj.transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
-
-        // position the obj
-        obj.transform.position = new Vector3(0, worldPosition.y, worldPosition.z);
-
-        if (_prefab == null)
+        if (_counter < _maxNumberOfObject)
         {
-            // set a color to the obj
-            obj.GetComponent<Renderer>().material.color = Color.red;
-        }
-
-        if (_prefab)
-        {
-            GameObject instPrefab = GameObject.Instantiate(_prefab, new Vector3(0, worldPosition.y, worldPosition.z), Quaternion.identity);
+            GameObject instPrefab = GameObject.Instantiate(_obj, new Vector3(0, worldPosition.y, worldPosition.z), Quaternion.identity);
             instPrefab.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            _objects.Add(instPrefab);
+            _counter++;
+        }
+        else
+        {
+            // position the obj that was added last
+            _objects[_maxNumberOfObject - 1].transform.position = new Vector3(0, worldPosition.y, worldPosition.z);
         }
     }
 }
