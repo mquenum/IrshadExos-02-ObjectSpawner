@@ -427,8 +427,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fee4d273c048ec4098118f41e5f80c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _obj: {fileID: 817561048809282980, guid: 992c3474a0cd6344daaea48ae1793979, type: 3}
-  _nbObjectBySec: 20
+  _obj: {fileID: 6671498146875547707, guid: 323489abc3f329548bbc52a442534064, type: 3}
+  _nbObjectBySec: 2
   _spawnCircleRadius: 10
   _maxNumberOfObject: 10
 --- !u!4 &1485731040

@@ -52,8 +52,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // position the obj that was added last
-            _objects[0].transform.position = new Vector3(0, worldPosition.y, worldPosition.z);
+            // get the list first obj
+            GameObject _firstObject = _objects[0];
+            // set the new position of that first object
+            _firstObject.transform.position = new Vector3(0, worldPosition.y, worldPosition.z);
+            // pop the list at item at index 0
+            _objects.RemoveAt(0);
+            // add the newly position first object et the end of list
+            _objects.Add(_firstObject);
         }
     }
 }
